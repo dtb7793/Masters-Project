@@ -1,0 +1,215 @@
+\documentclass{article}
+\usepackage{geometry}
+\geometry{a4paper, top=1 in, left=.5in, right=.5 in, bottom=.5in}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,epsfig,epstopdf,titling,url,array}
+
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{titlesec}
+
+%\usepackage{sectsty}
+\title{}
+\author{Duncan Bennett}
+\date{}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Duncan Bennett \\ Advisor : Dr. Adam Nyman}
+\chead{}
+\rhead{Committee : Dr. Andrew Berget \\ Dr. Richard Gardner}
+\rfoot{}
+\newcommand{\Proof}{ \noindent \textit{\underline{Proof.}} \vspace{0.5 cm}}
+\newcommand{\QED}{\vspace{0.5 cm} \noindent $\square$}
+\renewcommand{\deg}[1]{\text{deg} \left ( #1 \right )}
+\newcommand{\Tor}[1]{\text{Tor} \left ( #1 \right ) }
+\newcommand{\tensor}[2]{#1 \otimes #2}
+\newcommand{\tens}[1]{ \otimes_{#1}
+}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\renewcommand{\ker}[1]{\text{ker} \hspace{1mm} #1}
+\newcommand{\image}[1]{\text{image} \hspace{1mm} #1}
+\newcommand{\Hom}[3]{\text{Hom}_{#1} \left ( #2, #3 \right )}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FORMATTING
+
+\titleformat{\subsection}[runin]
+ {\normalfont \normalsize \bfseries}{\thesubsection}{1em}{}
+ \titleformat{\subsubsection}[runin]
+ {\normalfont \normalsize \bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\section}[runin]
+ {\normalfont \normalsize \bfseries}{\thesection}{1em}{}
+
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}[theorem]{Definition}
+
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+
+
+
+\renewenvironment{proof}
+{ \Proof \\ }
+{\\ \vspace{3mm} \\ \QED }
+
+\allowdisplaybreaks
+
+
+
+\begin{document}
+
+\begin{center}
+    {\Large Cohomology of Finite Groups} \\ 4:00 PM, Friday, March 2, 2018 in BH 201
+\end{center}
+
+%\section{Basics}
+
+% \begin{defn}
+% Let $\mathcal{C}$ be a sequence of abelian group homomorphisms:
+% \begin{align*}
+%     0 \rightarrow C^0 \overset{d_1}{\rightarrow} C^1 \rightarrow \ldots \rightarrow C^{n-1} \overset{d_n}{\rightarrow} C^n \overset{d_{n+1}}{\rightarrow} \ldots .
+% \end{align*}
+% \begin{enumerate}
+%     \item The sequence $\mathcal{C}$ is called a \emph{cochain complex} if the composition of any two successive maps is zero: $d_{n+1} \circ d_n = 0$ for all $n$. 
+%     \item If $\mathcal{C}$ is a cochain complex, its $n^{\text{th}}$ \emph{cohomology group} is the quotient group $\ker{d_{n+1}}/\image{d_n}$, and is denoted by $H^n(\mathcal{C})$. 
+% \end{enumerate}
+% \end{defn}
+
+% \begin{defn}
+% Let $R$ be a ring. A \emph{left $R$-module} is a set $M$ together with 
+% \begin{enumerate}[noitemsep]
+%     \item a binary operation $+$ on $M$ under which $M$ is an abelian group, and 
+%     \item an action of $R$ on $M$ (that is, a map $R \times M \to M$) denoted by $rm$, for all $r \in R$ and for all $m \in M$ which satisfies 
+%     \begin{enumerate}[noitemsep]
+%         \item $(r+s)m = rm+sm$, for all $r, s \in R$ and $m \in M$
+%         \item $(rs)m = r(sm)$, for all $r, s \in R$ and $m \in M$
+%         \item $r(m+n) = rm + rn$, for all $r \in R$ and $m, n \in M$
+%         \item $1m = m$, for all $m \in M$. 
+%     \end{enumerate}
+% \end{enumerate}
+% \end{defn}
+
+% \begin{defn}
+% Let $R$ be a ring. A \emph{left $R$-module} is an abelian group $(M, +)$ together with an action of $R$ on $M$ which is distributive over $+$ and associative.
+% \end{defn}
+
+
+% \begin{defn}
+% Let $R$ be a fixed commutative ring with $1 \neq 0$ and let $G$ be a finite group written multiplicatively. Then the \emph{group ring}, $RG$, of $G$ with coefficients in $R$ is the set of all formal sums $\sum_{g \in G} a_g g$ for $a_g \in R$ for all $g \in G$. Multiplication is induced by the binary operation of $G$. When $R = \Z$ we call the group ring an \emph{integral group ring}. Any $\Z G$-module is simply called a \emph{$G$-module}.
+% \end{defn}
+
+\begin{defn}
+    Let $H$ be a group. An abelian group $N$ on which $H$ acts (on the left) is called a \emph{$H$-module}.
+\end{defn}
+
+\begin{defn}
+    If $H$ is a finite group and $N$ is a $H$-module, define $C^0(H,N) = N$ and for $n \geq 1$ define $C^n(H,N)$ to be the collection of all maps from $H^n = H \times \ldots \times H$ ($n$ times) to $N$. The elements of $C^n(H,N)$ are called $n$-\emph{cochains (of $H$ with values in N)}. 
+\end{defn}
+
+\begin{defn}
+    For $n \geq 0$, define the $n^{\text{th}}$ \emph{coboundary} homomorphism from $C^n(H,N)$ to $C^{n+1}(H,N)$ by 
+    \begin{align*}
+        d_n(f)(h_1, \ldots , h_{n+1}) =& h_1 \cdot f(h_2, \ldots h_{n+1}) + \sum_{i = 1}^n (-1)^i f(h_1, \ldots, h_{i - 1}, h_i h_{i+1}, h_{i+2}, \ldots , h_{n+1}) + (-1)^{n+1} f(h_1, \ldots , h_n)
+    \end{align*}
+    where the product $h_i h_{i +1}$ occupying the $i^{\text{th}}$ position of $f$ is taken in the group $H$. 
+\end{defn}
+
+\begin{defn}
+       Let $Z^n(H,N) = \ker{d_n}$ for $n \geq 0$. The elements of $Z^n(H,N)$ are called \emph{$n$-cocycles}. 
+         Let $B^n(H,N) = \image{d_{n-1}}$ for $n \geq 1$ and let $B^0(H,N) = 1$. The elements of $B^n(H,N)$ are called \emph{$n$-coboundaries}. 
+\end{defn}
+
+\begin{defn}
+    For any $H$-module $A$ and any $n \geq 0$ the quotient group $Z^n(H,N)/B^n(H,N)$ is called the $n^{\text{th}}$ \emph{cohomology group of $H$ with coefficients in $N$} and is often denoted by $H^n(H,N)$. 
+\end{defn}
+
+%\section{Cohomology Groups}
+
+\begin{defn}
+    Suppose $N$ is a $H$-module and $N'$ is a $H'$-module. Group homomorphisms $\varphi : H' \to H$ and $\psi : N \to N'$ are said to be compatible if $\psi$ is a $H'$-module homomorphism when $N$ is made into a $H'$-module by means of $\varphi$, i.e., if $\psi(\varphi(h')n) = h'\psi(n)$ for all $h' \in H'$ and $n \in N$. 
+\end{defn}
+
+\begin{remark}
+    Compatible maps induce a homomorphism $\lambda_n$ between cohomology groups by way of 
+    \begin{align*}
+        \lambda_n : C^n(H, N) \to C^n(H', N') \text{ defined by } f \mapsto \psi \circ f \circ \varphi^n.
+    \end{align*}
+\end{remark}
+
+\begin{defn}
+    Let $K$ be a subgroup of a group $H$ and let $N$ be a $H$-module. The inclusion map $\varphi : K \to H$ and the identity $\psi : N \to N$ are compatible homomorphisms. We call the induced map the \emph{restriction homomorphism}:
+    $$\text{Res} : H^n(H, N) \to H^n(K, N), \hspace{1cm} n \geq 0.$$
+\end{defn}
+
+\begin{defn}
+    The \emph{corestriction homomorphism} is a map induced by the map $\text{Cor} : C^n(K, N) \to C^n(H, N)$, $n \geq 0$ defined by 
+    $\text{Cor}(f)(p) = \sum_{i = 1}^m h_i f(h_i^{-1} p)$
+    for $p \in P_n = \Z H \otimes_{\Z} \ldots \otimes_{\Z} \Z H$ ($n+1$-times) and $f \in \text{Hom}_{\Z K} (P_n, N)$ that is a cocycle. 
+\end{defn}
+
+\begin{prop}
+    Suppose $K$ is a subgroup of $H$ of index $m$. Then $\text{Cor} \circ \text{Res} = m$, i.e., if $c$ is a cohomology class in $H^n(H, N)$ for some $H$-module $N$, then 
+    $\text{Cor}(\text{Res}(c)) = mc \in H^n(H, N) \text{ for all } n \geq 0.$
+\end{prop}
+
+\begin{cor}
+    Suppose the finite group $H$ has order $m$. Then $m H^n(H,N) = 0$ for all $n \geq 1$ and any $H$-module $N$. 
+\end{cor}
+
+% \begin{cor}
+%     Suppose $G$ is a finite group whose order is relatively prime to the exponent of the $G$-module $A$. Then $H^n(G, A) = 0$ for all $n \geq 1$. In particular, if $A$ is a finite abelian group with $(|G|,|A|) = 1$ then $H^n(G, A) = 0$ for all $n \geq 1$. 
+% \end{cor}
+
+%\section{Extensions}
+
+\begin{defn}
+Let $N, G, H$ be groups. Then $G$ is an \emph{extension of $H$ by $N$} if there exists a short exact sequence $1 \rightarrow N \overset{\psi}{\rightarrow} G \overset{\varphi}{\rightarrow} H \rightarrow 1$. Two extensions are said to be equivalent if there exists an isomorphism $\alpha : G \to G'$ such that the following diagram commutes. 
+\begin{center}
+    \begin{tikzcd}
+    1  \arrow[r] & N \arrow[r, "\psi"] \arrow[d, "id"] & G  \arrow[r,"\varphi"] \arrow[d, "\alpha"]& H   \arrow[r] \arrow[d, "id"]& 1\\
+    1  \arrow[r] & N \arrow[r, "\psi'"] & G'  \arrow[r, "\varphi'"] & H    \arrow[r] & 1
+    \end{tikzcd}
+\end{center}
+
+
+
+\end{defn}
+% Another way to define an extension is by saying $G$ is an extension of $H$ by $N$ if there exists an injective homomorphism $\psi: N \rightarrow G$ such that $G/\psi(N) \cong H$.  Given groups $N$ and $H$, the {\it extension problem} is the problem of classifying all extensions of $H$ by $N$ up to equivalence.
+
+\begin{defn}
+Let $N$ and $H$ be groups and let $\varphi : H \to \text{Aut}(N)$. Let $\cdot$ denote the (left) action of $N$ on $K$ determined by $\varphi$. Then the \emph{semidirect product of $N$ and $H$} is a group with set $N \times H$ and binary operation defined by $(n_1, h_1)(n_2, h_2) = (n_1 h_1 \cdot n_2, h_1 h_2)$. 
+\end{defn}
+\begin{defn}
+The extension $1 \rightarrow N \overset{\psi}{\rightarrow} G \overset{\varphi}{\rightarrow} H \rightarrow 1$ is said to \emph{split} if $G$ can be written as a semidirect product of $N$ and $H$.
+\end{defn}
+\begin{theorem}
+    Let $N$ be a $H$-module. Then 
+    % \begin{enumerate}[noitemsep]
+    %     \item A function $f : G \times G \to A$ is a normalized factor set of some extension $E$ of $G$ by $A$ (with conjugation given by the $G$-module action on $A$) if and only if $f$ is a normalized $2$-cocycle in $Z^2(G, A)$.
+    %     \item There is a bijection between the equivalence classes of extensions $E$ as in (1) and the cohomology classes in $H^2(G, A)$. The bijection takes an extension $E$ into the class of an normlized factor set $f$ for $E$ associated to any normalized section $\mu$ of $G$ into $E$, and takes a cohomology class $c$ in $H^2(G, A)$ to the extension $E_f$ defined by the extension (37) for any normalized cocycle $f$ in the class $c$. 
+    %     \item Under the bijection in (2) split extensions correspond to the trivial cohomology class. 
+    % \end{enumerate}
+    there is a bijection between the equivalence classes of extensions $H$ by $N$ and the cohomology classes in $H^2(H, N)$. Under the bijection split extensions correspond to the trivial cohomology class. 
+\end{theorem}
+
+\begin{cor}
+    Every extension of $H$ by the abelian group $N$ splits if and only if $H^2(H, N) = 0$. 
+\end{cor}
+
+\begin{cor}
+    If $N$ is a finite abelian group and $(|N|,|H|) = 1$ then every extension of $H$ by $N$ splits. 
+\end{cor}
+
+
+\end{document}
